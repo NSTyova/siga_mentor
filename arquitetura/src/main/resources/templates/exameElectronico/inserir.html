@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">	
+		
+		<main role="main">
+		
+		<section class="jumbotron text-center">
+			<img class="d-block mx-auto mb-4" th:src="@{/image/ordem.jpeg}"
+				width="72" height="72">
+			<div class="container">
+				<h1 class="jumbotron-heading">Ordem dos Arquitetos</h1>
+				<p class="lead text-muted">Exame Electronico</p>
+			</div>
+		</section>
+			
+		<div class="album py-5 bg-light">
+			<div class="container">
+
+				<div class="d-flex justify-content-center">					
+					<div class="col-md-8">						
+						<div th:replace="fragments/alert"></div>
+						<form th:action="@{/candidatos/novo}" th:object="${requisicaoExameElectronico}"
+							method="POST" class="was-validated">
+							<input type="hidden" th:field="*{id}" />
+							<div class="mb-3">
+								<label for="nome">identificador da Pergunta</label>
+								<div class="input-group">
+									<input type="text" th:field=*{id} disabled="disabled" class="form-control"  required />
+									<div class="invalid-feedback">Nome é requerido.</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Pergunta</label>
+								<div class="col-sm-10">
+									<select id="pergunta" class="form-control" th:field=*{codigo_pergunta} disabled="disabled">
+									<option value="">Selecione</option>
+									<option th:each="p: ${perguntas}" th:value="${p.id}" th:text="${p.descricao}">Lubango</option>
+									</select>	
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Resposta</label>
+								<div class="col-sm-10">
+									<select id="pergunta" class="form-control" th:field=*{codigo_resposta}>
+									<option value="">Selecione</option>
+									<option th:each="p: ${respostas}" th:value="${p.id}" th:text="${p.descricao}">Lubango</option>
+									</select>	
+								</div>
+							</div>
+										
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<button type="submit" class="btn btn-primary" data-toggle="tooltip"
+											data-placement="right" title="Salvar"><i class="fas fa-save"></i></button>
+								</div>
+							</div>
+						</form>
+						
+						<hr/>
+						
+						<table class="table table-sm table-striped table-bordered nowrap"
+							style="width: 100%">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Perguntas</th>
+									<th scope="col-md-1"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="ex: ${exames}">
+									<td th:text="${ex.id}">21</td>
+									<td th:text="${ex.codigo_pergunta.descricao}">21</td>
+									<td class="text-center"><a class="btn btn-info btn-sm"
+										th:href="@{/exameElectronico/editar/{id} (id=${ex.id}) }"
+										role="button"> <span class="oi oi-brush" title="Editar"
+											aria-hidden="true"></span>
+									</a> <a class="btn btn-link btn-xs"> <i
+											class="fas fa-times-circle"></i>
+									</a></td>
+								</tr>
+								<tr>
+									<td colspan="4" th:if="${#lists.isEmpty(exames)}">Nenhum registrado para esse candidato.</td>
+								</tr>
+							</tbody>
+						</table>
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+								<label for="nome">identificador da Pergunta</label>
+								<div class="input-group">
+									<input type="text"  disabled="disabled" class="form-control"  required />
+									<div class="invalid-feedback">Nome é requerido.</div>
+								</div>
+							</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fim do Modal -->
+
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">1</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">Certificado</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+  <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+</div>
+
+
+
+<button type="button" class="btn btn-primary">Primary</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</main>
+	</section>
+	<script th:src="@{/js/clinicas.js?(v=${version})}" th:fragment="js"></script>
+	<script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>

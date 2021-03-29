@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">	
+		
+		<main role="main">
+		
+		<section class="jumbotron text-center">
+			<img class="d-block mx-auto mb-4" th:src="@{/image/ordem.jpeg}"
+				width="72" height="72">
+			<div class="container">
+				<h1 class="jumbotron-heading">SIGA</h1>
+				<p class="lead text-muted">Emolumentos Editar</p>
+			</div>
+		</section>
+			
+		<div class="album py-5 bg-light">
+			<div class="container">
+
+				<div class="d-flex justify-content-center">					
+					<div class="col-md-8">						
+						<div th:replace="fragments/alert"></div>
+						<form th:action="@{/emolumentos/editar}"   th:object="${requisicaoNovoEmolumento}"  
+							method="POST" class="was-validated">
+							<input type="hidden" th:field="*{id}"/>
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Codigo</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control is-valid" th:field="*{id}"
+										id="ano_exame" placeholder="Ano Exame" disabled="disabled" />
+									<div class="invalid-feedback">localizacao é requerida.</div>	
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Desconto</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control is-valid" th:field="*{desconto}"
+										id="ano_exame" placeholder="Ano Exame" required />
+									<div class="invalid-feedback">localizacao é requerida.</div>	
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Codigo</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control is-valid" th:field="*{codigo}"
+										id="ano_exame" placeholder="Ano Exame" required />
+									<div class="invalid-feedback">localizacao é requerida.</div>	
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Descricao</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control is-valid"  th:field="*{descricao}"
+										id="ano_exame" placeholder="Ano Exame" required />
+									<div class="invalid-feedback">localizacao é requerida.</div>	
+								</div>
+							</div>				
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<button type="submit" class="btn btn-primary" data-toggle="tooltip"
+											data-placement="right" title="Salvar"><i class="fas fa-save"></i></button>
+								</div>
+							</div>
+						</form>
+						
+						<hr/>
+						
+						<h2>Lista de Emolumentos</h2>
+						
+						<table  class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+						  <thead class="thead-dark">
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Codigo Emolumento</th>
+						      <th scope="col">Descricao do Emolumento</th>
+						      <th scope="col-md-1"></th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						  		<tr th:each="e: ${emolumentos}">
+						  			<td th:text="${e.id}">21</td>
+						  			<td th:text="${e.codigo}">21</td>
+						  			<td th:text="${e.descricao}">propina</td>
+						  			<td class="text-center">
+						  				<a class="btn btn-info btn-sm" th:href="@{/emolumentos/editar/{id} (id=${e.id}) }" role="button">
+					                		 <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+					            		 </a>
+						  				<a class ="btn btn-link btn-xs">
+						  					<i class="fas fa-times-circle"></i>
+						  				</a>
+						  			</td>
+						  		</tr>
+						  		<tr>
+						  			<td colspan="4" th:if="${#lists.isEmpty(emolumentos)}">Nenhum  Ano Lectivo foi encontrado.</td>
+						  		</tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</main>
+	</section>
+	<script th:src="@{/js/clinicas.js?(v=${version})}" th:fragment="js"></script>
+	<script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>

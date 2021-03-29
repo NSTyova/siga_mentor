@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+	  layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<section class="layout-content" layout:fragment="corpo">	
+		
+		<main role="main">
+		
+		<section class="jumbotron text-center">
+			<img class="d-block mx-auto mb-4" th:src="@{/image/ordem.jpeg}"
+				width="72" height="72">
+			<div class="container">
+				<h1 class="jumbotron-heading">Ordem dos Arquitetos</h1>
+				<p class="lead text-muted">Gravar Anos</p>
+			</div>
+		</section>
+			
+		<div class="album py-5 bg-light">
+			<div class="container">
+
+				<div class="d-flex justify-content-center">					
+					<div class="col-md-8">						
+						<div th:replace="fragments/alert"></div>
+						<form th:action="@{/ano/novo}" th:object="${requisicaoNovoAno}"  
+							method="POST" class="was-validated">
+							
+							<div class="form-group row">
+								<label for="especialidade" 
+									class="col-sm-2 col-form-label">Ano</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" th:errorclass=" is-invalid" th:field="*{ano}"
+										id="ano_exame" placeholder="Ano Exame" requerid />
+									<div class="invalid-feedback">localizacao é requerida.</div>	
+								</div>
+							</div>
+						<button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+						
+											
+							<div class="form-group row">
+								<div class="col-sm-10">
+									<button type="submit" class="btn btn-primary" data-toggle="tooltip"
+											data-placement="right" title="Salvar"><i class="fas fa-save"></i></button>
+								</div>
+							</div>
+						</form>
+						
+						<hr/>
+						<input type="hidden" name="id" th:field="${requisicaoNovoAno.ano}">
+						<h2>Lista de Anos Lectivos</h2>
+						
+						<table  class="table table-sm table-striped table-bordered nowrap" style="width:100%">
+						  <thead class="thead-dark">
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Anos Lectivos</th>
+						      <th scope="col-md-1"></th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						  		<tr th:each="anos: ${anosLectivos}">
+						  			<td th:text="${anos.id}">21</td>
+						  			<td th:text="${anos.ano}">21</td>
+						  			<td class="text-center">
+						  				<a class="btn btn-info btn-sm" th:href="@{/ano/editar/{id} (id=${anos.id}) }" role="button">
+					                		 <span class="oi oi-brush" title="Editar" aria-hidden="true"></span>
+					            		 </a>
+						  				<a class ="btn btn-link btn-xs">
+						  					<i class="fas fa-times-circle"></i>
+						  				</a>
+						  			</td>
+						  		</tr>
+						  		<tr>
+						  			<td colspan="3" th:if="${#lists.isEmpty(anosLectivos)}">Nenhum  Ano Lectivo foi encontrado.</td>
+						  		</tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		</main>
+	</section>
+	<script th:src="@{/js/clinicas.js?(v=${version})}" th:fragment="js"></script>
+	<script th:inline="javascript" th:fragment="inlinescript"></script>
+</body>
+</html>
