@@ -49,7 +49,7 @@
 								<label for="especialidade">Aluno</label>
 									<select id="pergunta" class="form-control" th:field=*{aluno} >
 									<option value="ano">Selecione</option>
-									<option th:each="a: ${alunos}" th:value="${a.id}" th:text="${a.nome}  + ${a.numeroDeAluno}">Lubango</option>
+									<option th:each="a: ${alunos}" th:value="${a.id}" th:text="${a.nome}">Lubango</option>
 									</select>	
 								
 							</div>

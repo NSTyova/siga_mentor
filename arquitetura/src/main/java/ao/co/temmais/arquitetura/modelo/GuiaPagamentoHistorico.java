@@ -3,6 +3,7 @@ package ao.co.temmais.arquitetura.modelo;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,18 +19,18 @@ public class GuiaPagamentoHistorico{
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="codigo_usuario_emitiu")
 	private Usuario usuario;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="codigo_usuario_anulou")
 	private Usuario usuarioAnulou;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="codigo_emolumento")
 	private Emolumentos emolumento;
 	private double valor;
 	private String obs;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="codigo_aluno")
 	private Aluno aluno;
 	@ManyToOne
